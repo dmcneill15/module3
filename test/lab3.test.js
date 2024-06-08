@@ -257,13 +257,40 @@ describe("Fun and Interesting Unit Tests", function () {
   });
 
   // 11. Create a function that converts a JSON array of customers to CSV string format
+  // This would be used to parse through the data received from a server
+  /*Parsing JSON data from a server involves two steps: first, decoding the JSON string into a native 
+  JavaScript data structure (such as an array or object), and then iterating over this structure using 
+  JavaScript’s built-in methods like for...in, Object.entries, Object.values, or array methods such as forEach.*/
   it("should convert a JSON array of customers to CSV string format", function () {
     const jsonToCsv = (customers) => {
       // Students should implement this
-        //const header = Object.keys(customers[0]);   //Get the keys that will be used as the CSV header. Object.keys() returns an array of the object keys
-        //console.log(header);
-        //const headerStr = header.join();    //joins the array elements to one string, comma separated
-        //console.log(headerStr);
+      //customers = [object1, object2]=>customers is an array
+
+      let csv = ""; //creates an empty placeholder for the csv string
+
+      //get the headers
+      const headers = Object.keys(customers[0]); //Get the keys that will be used as the CSV headers. Object.keys() returns an array of the object keys
+      csv = csv + headers.join(",") + "\n";
+   
+      //get the values for each header
+      /*customers.forEach(obj =>{
+            const values = headers.map(header => obj[header]);
+            csv = csv + values.join(',') + '\n';
+        });*/
+
+      //console.log(customers.length);  //2 objects
+      
+      for (let i = 0; i < customers.length; i++) {
+        let rowValues = [];
+        for (let j = 0; j < headers.length; j++) {
+            let header = headers[j];
+            rowValues.push(customers[i][header]);
+        }
+        csv = csv + rowValues.join(",") + "\n";
+      }
+
+      console.log(csv);
+      return csv;
     };
     const customers = [
       {
@@ -280,43 +307,64 @@ describe("Fun and Interesting Unit Tests", function () {
       },
     ];
     const csv =
-      "id,name,email,phone\n1,John Doe,john@example.com,555-555-5555\n2,Jane Doe,jane@example.com,555-555-5556";
+      "id,name,email,phone\n1,John Doe,john@example.com,555-555-5555\n2,Jane Doe,jane@example.com,555-555-5556\n";
     expect(jsonToCsv(customers)).to.equal(csv);
   });
 
   // 12. Create a function that converts a CSV string to an array of JSON objects
+  //https://www.geeksforgeeks.org/how-to-convert-csv-to-json-in-javascript/
   it("should convert a CSV string to an array of JSON objects", function () {
     const csvToJson = (csv) => {
       // Students should implement this
+
       //need to spilt the one csv string into individual arrays
       let csvRows = csv.split("\n");
+      const headers = csvRows[0].split(","); //further split the string into elements
+      let values = "";
+      const jsonData = []; //create an array to store the object pairs
 
-      const headers = csvRows[0].split(",");   //further split the string into elements
-      //console.log(headers);
-
-      let values;
       //loop through each row and assign the value to the header key pair
       //end of each loop will have an object with key-value pairs
-      const jsonData = [];  //create an array to store the object pairs
       for (let i = 1; i < csvRows.length; i++) {
-        values = csvRows[i].split(",");        //split each row into elements
-        
-
+        values = csvRows[i].split(","); //split each row into elements
         const objPair = {}; //create an object to store the value pair for each row
 
         //loop through all the headers
-        for (let j = 0; j < headers.length; j++){
-            const key = headers[j].trim();  //fetch the header
-            const value = values[j].trim(); //fetch the corresponding value
-            objPair[key] = value;
-            //console.log(objPair[key]);
+        for (let j = 0; j < headers.length; j++) {
+          const key = headers[j].trim(); //fetch the header
+          let value = values[j].trim(); //fetch the corresponding value
+          if (!isNaN(value)) {
+            value = Number(value);
+          }
+          objPair[key] = value;
+          //console.log(objPair[key]);
         }
 
-        jsonData.push(objPair);// adds the object to the jsonData array=> jsonData[0] = object1
+        jsonData.push(objPair); // adds the object to the jsonData array=> jsonData[0] = object1
       }
 
-    return(jsonData);
-   
+      return jsonData;
+
+      /*Alternative per class*/
+      /*  let csvRows = csv.split("\n");
+        const headers = csvRows[0].split(",");   //further split the string into elements
+
+        class Customer {
+            constructor(id,name,email, phone){
+                this.id = Number(id);
+                this.name = name;
+                this.email=email;
+                this.phone=phone;
+            }
+        }
+
+        const customers = [];
+        for (let i =1, i<csvRows.length, i++){
+            const csvRow = csvRows[i].spilt(",");
+            const customer = new Customer(csvRow[0], csvRow[1]);
+            customer.push(customer);
+        }
+        return(customer);*/
     };
     const csv =
       "id,name,email,phone\n1,John Doe,john@example.com,555-555-5555\n2,Jane Doe,jane@example.com,555-555-5556";
