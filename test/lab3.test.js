@@ -49,8 +49,7 @@ describe("Fun and Interesting Unit Tests", function () {
       // Regular expression to match emoji
       // A regular expression RegEx is a pattern of characters.
       //const emojiRegex = /(\p{Emoji_Presentation}|\p{Emoji_Modifier_Base}|\p{Emoji_Component}|\p{Extended_Pictographic})/gu;
-      //const emojiRegex = /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/gi;
-      const emojiRegex = /\p{Emoji_Presentation}/gu;
+      const emojiRegex = /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/gi;
       let emojiCount = 0;
 
       Array.from(str).forEach((char) => {
@@ -194,7 +193,7 @@ describe("Fun and Interesting Unit Tests", function () {
     const removeDuplicates = (arr) => {
       // Students should implement this function that removes duplicate elements from the input array arr.
 
-      //Set function creates a Set from the original array, which automatically removes any duplicate values
+      // Set function creates a Set from the original array, which automatically removes any duplicate values
       // Set is an object type but can only contin unique values - no duplicates
       let newArr = new Set(arr);
       return [...newArr];

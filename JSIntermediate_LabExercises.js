@@ -111,3 +111,87 @@ console.log("camelCase3: " + camelCase3("background-image")); // backgroundImage
 console.log("camelCase3: " + camelCase3("display")); // display
 */
 
+// Question 5
+//-------------------------------------------------------------------------------
+/*
+function currencyAddition(float1, float2) {
+  return parseFloat((float1 + float2).toFixed(2));
+  //floats are added correctly
+  //toFixed rounds the addition of floats and stores a string
+  //parseFloat converts string back to a number
+}
+
+function currencyOperation(float1, float2, operation, precision) {
+  switch (operation) {
+    case "add":
+      return parseFloat((float1 + float2).toFixed(precision));
+      break;
+    case "subtract":
+      return parseFloat((float1 - float2).toFixed(precision));
+      break;
+    case "divide":
+      return parseFloat((float1 / float2).toFixed(precision));
+      break;
+    case "multiply":
+      return parseFloat((float1 * float2).toFixed(precision));
+      break;
+    default:
+        return "no such operation";
+  }
+}
+
+let twentyCents = 0.22;
+let tenCents = 0.11;
+let fixedTwenty = twentyCents.toFixed(2);
+let fixedTen = tenCents.toFixed(2);
+console.log(fixedTwenty + fixedTen); //why is this not working? - output is concatenating the two variables as strings
+console.log(currencyAddition(twentyCents, tenCents));
+console.log(currencyOperation(twentyCents, tenCents, "add", 2));
+console.log(currencyOperation(twentyCents, tenCents, "divide", 4));
+*/
+
+// Question 6
+//-------------------------------------------------------------------------------
+/*
+function unique(duplicatesArray){
+    let newArray = new Set(duplicatesArray);  //Set function creates a Set from the original array, which automatically removes any duplicate values
+    return [...newArray];   //convert the set into an array
+}
+
+const colours = ['red', 'green', 'blue', 'yellow', 'orange', 'red', 'blue', 'yellow'];
+const testScores = [55, 84, 97, 63, 55, 32, 84, 91, 55, 43];
+const testDuplicates = ['Tiger', 'Tiger', 'Giraffe', 'Giraffe', 'Elephant', 'Elephant', 'Lion', 'Lion'];
+console.log(unique(colours)); // [ 'red', 'green', 'blue', 'yellow', 'orange' ] 
+console.log(unique(testScores)); // [ 55, 84, 97, 63, 32, 91, 43 ]
+console.log(unique(testDuplicates));
+*/
+
+//Question 7
+//-------------------------------------------------------------------------------
+//https://sentry.io/answers/find-object-by-property-in-javascript-array/#:~:text=The%20find%20method%20iterates%20through,iterating%20and%20return%20that%20element.
+function getBookTitle(bookList, bookId){
+    return bookList.find(obj => obj.id == bookId).title;
+}
+
+function getOldBooks(bookList){
+    //let oldBooks = [];
+    //for (let i =0; i<bookList.length; i++){
+    //    if(bookList[i].year > 1950){
+    //        oldBooks = [...oldBooks, bookList[i]];
+    //    }
+    //}
+
+    let oldBooks = bookList.filter(bookList => bookList.year > 1950); //filters the book list for books with year>1950. Creates a new object of those books
+    return oldBooks;
+}
+
+const books = [ 
+    { id: 1, title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', year: 1925 }, 
+    { id: 2, title: 'To Kill a Mockingbird', author: 'Harper Lee', year: 1960 }, 
+    { id: 3, title: '1984', author: 'George Orwell', year: 1949 }, 
+    { id: 4, title: 'Brave New World', author: 'Aldous Huxley', year: 1932 }, 
+    { id: 5, title: 'The Catcher in the Rye', author: 'J.D. Salinger', year: 1951 }, 
+];
+
+console.log(getBookTitle(books, 1));
+console.log(getOldBooks(books));
