@@ -214,3 +214,36 @@ const books = [
 //console.log(addGenre(books));
 console.log(getTitles(books, "H"));
 */
+
+//Question 8
+//-------------------------------------------------------------------------------
+function printPhoneBook(contacts){
+  contacts.forEach((value, key) => {
+    console.log("Name: " + key + ", Number: " + value);
+  });
+}
+
+
+const phoneBookABC = new Map(); //an empty map to begin with 
+phoneBookABC.set('Annabelle', '0412312343');
+phoneBookABC.set('Barry', '0433221117');
+phoneBookABC.set('Caroline', '0455221182');
+
+const phoneBookDEF = new Map();
+const elements1 = [
+  ['Danielle', '0123456789'],
+  ['Elanor','9874563210'],
+  ['Fred', '654789123']
+];
+
+;
+
+elements1.map(([name, number]) => phoneBookDEF.set(name, number));
+phoneBookABC.set('Caroline','024681012');
+const phoneBook = new Map([...phoneBookABC]);
+phoneBookDEF.forEach((value, key) => {
+  phoneBook.set(key, value);
+});
+
+console.log(phoneBookABC);
+printPhoneBook(phoneBook);
