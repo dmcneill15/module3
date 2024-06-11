@@ -169,6 +169,7 @@ console.log(unique(testDuplicates));
 //Question 7
 //-------------------------------------------------------------------------------
 //https://sentry.io/answers/find-object-by-property-in-javascript-array/#:~:text=The%20find%20method%20iterates%20through,iterating%20and%20return%20that%20element.
+/*
 function getBookTitle(bookList, bookId){
     return bookList.find(obj => obj.id == bookId).title;
 }
@@ -185,13 +186,31 @@ function getOldBooks(bookList){
     return oldBooks;
 }
 
+function addGenre(bookList){
+  let updatedBooks = books.map(item => ({...item,genre:'classic'}));
+  return updatedBooks;
+}
+
+function getTitles(bookList, authorInitial){
+  //filter for author Initials and then map to a new array
+  let newBookList= bookList
+    .filter(item => item.author.startsWith(authorInitial))
+    .map(item => item.title);
+  return newBookList;
+}
+
 const books = [ 
     { id: 1, title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', year: 1925 }, 
     { id: 2, title: 'To Kill a Mockingbird', author: 'Harper Lee', year: 1960 }, 
     { id: 3, title: '1984', author: 'George Orwell', year: 1949 }, 
     { id: 4, title: 'Brave New World', author: 'Aldous Huxley', year: 1932 }, 
     { id: 5, title: 'The Catcher in the Rye', author: 'J.D. Salinger', year: 1951 }, 
+    { id: 6, title: 'My test book about cars', author: 'Henry Ford', year: 1903 }, 
 ];
 
-console.log(getBookTitle(books, 1));
-console.log(getOldBooks(books));
+
+//console.log(getBookTitle(books, 1));
+//console.log(getOldBooks(books));
+//console.log(addGenre(books));
+console.log(getTitles(books, "H"));
+*/
