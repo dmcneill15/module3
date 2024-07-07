@@ -198,6 +198,7 @@ multiply.delay(500)(5, 5, 1, 2); // prints 50 after 500 milliseconds
 
 //Question7
 //------------------------------------------------
+/*
 Person.prototype.toString = function(){
   return `Name: ${this.name}, Age: ${this.age}, Gender: ${this.gender}`;
 }
@@ -225,3 +226,81 @@ Student.prototype.toString = function(){
 }
 const student1 = new Student('Danielle', 30, 'female', 'year2024');
 console.log('student1: ' + student1.toString());
+*/
+
+//Question8 - class inheritance
+//------------------------------------------------
+class DigitalClock {
+  constructor(prefix) {
+    this.prefix = prefix;
+  }
+
+  display() {
+    let date = new Date();
+    //create 3 variables in one go using array destructuring
+    let [hours, mins, secs] = [date.getHours(), date.getMinutes(),
+    date.getSeconds()];
+    if (hours < 10) hours = '0' + hours;
+    if (mins < 10) mins = '0' + mins;
+    if (secs < 10) secs = '0' + secs;
+    console.log(`${this.prefix} ${hours}:${mins}:${secs}`);
+  }
+  stop() {
+    clearInterval(this.timer);
+  }
+  start() {
+    this.display();
+    this.timer = setInterval(() => this.display(), 1000);
+  }
+}
+const myClock = new DigitalClock('my clock:');
+//myClock.start();
+
+class PercisionClock extends DigitalClock {
+    //add the precision parameter. If nothing is supplied, will use 1000
+    constructor(prefix, precision = 1000){
+      super(prefix);              //super keyword in a child constructor, calls the constructor from the parent
+      this.precision = precision
+    }
+
+    //precision parameter is used to set the interval for the display
+    //if precision = 500,then the display should refresh evey 500ms
+    //if there is no precision, then the display should refresh every 1s
+    start(){
+      //super.display() will have the same effect here, but calls the method from DigitalClock. 
+      //this.display calls the display method from the current instance of precision clock
+      this.display();       
+      this.timer = setInterval(() => this.display(), this.precision);
+    }
+}
+
+const pClock = new PercisionClock('Clock prefix/id: ', 500);
+//pClock.start();
+
+class AlarmClock extends DigitalClock{
+  constructor(prefix, wakeUpTime='07:00'){
+    super(prefix);
+    this.wakeUpTime = wakeUpTime;
+  }
+
+  display(){
+    let date = new Date();
+    //create 3 variables in one go using array destructuring
+    let [hours, mins, secs] = [date.getHours(), date.getMinutes(),
+    date.getSeconds()];
+    if (hours < 10) hours = '0' + hours;
+    if (mins < 10) mins = '0' + mins;
+    if (secs < 10) secs = '0' + secs;
+    const currentTime = `${hours}:${mins}`;
+    console.log(`${this.prefix} ${hours}:${mins}:${secs}`);
+
+    if(currentTime==this.wakeUpTime){
+      console.log('Wake Up');
+      this.stop();
+    }
+
+  }
+}
+
+const aClock = new AlarmClock('id:1', '22:30');
+aClock.start();
