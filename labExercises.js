@@ -51,4 +51,32 @@ let timerId = setTimeout(delayMsgArrow, 10000, "#5: Delayed by 10s");
 setTimeout(()=>clearInterval(timerId),1000);        //after 1s clear the timer for #5
 */
 
+//Question3 - Debouncing
+//------------------------------------------------
+function printMe(msg) {
+  console.log(`printing debounced message: ${msg}`);
+}
+//printMe();
 
+//decorator function
+function debounce(func, msDelay){
+  //let delay= 1000;
+  let timeoutId;
+  return function(msg){
+    clearTimeout(timeoutId);  //clear any previously existing timers
+    //timeoutId = setTimeout(func,msDelay);
+    timeoutId = setTimeout(()=>func(msg), msDelay);
+  }
+
+}
+
+printMe = debounce(printMe, 1000); //create this debounce function for a)
+//printMe("msg");
+setTimeout(()=>printMe("msg1"), 100);
+setTimeout(()=>printMe("msg2"), 200);
+setTimeout(()=>printMe("msg3"), 300);
+
+//fire off 3 calls to printMe within 300ms - only the LAST one should print, after 1000ms of no calls
+//setTimeout(printMe("msg"), 100);   //will call printMe after 100ms
+//setTimeout(printMe("msg"), 200);   //will call printMe after 200ms
+//setTimeout(printMe("msg"), 300);   //will call printMe after 300ms - because no other call is made to printMe, this is allowed to execute
