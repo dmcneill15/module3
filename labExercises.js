@@ -176,6 +176,7 @@ setTimeout(boundDescription, 200);
 
 //Question6
 //------------------------------------------------
+/*
 //use 'Function' prototype to add a new function to all functions
 //here Function must be capital to refer to the Function object/class
 Function.prototype.delay = function(ms){
@@ -193,3 +194,34 @@ function multiply(a, b, c, d) {
 }
 multiply.delay(500)(5, 5); // prints 25 after 500 milliseconds
 multiply.delay(500)(5, 5, 1, 2); // prints 50 after 500 milliseconds
+*/
+
+//Question7
+//------------------------------------------------
+Person.prototype.toString = function(){
+  return `Name: ${this.name}, Age: ${this.age}, Gender: ${this.gender}`;
+}
+
+function Person(name, age, gender) {
+  this.name = name;
+  this.age = age;
+  this.gender = gender;
+}
+const person1 = new Person('James Brown', 73, 'male')
+console.log('person1: ' + person1); //prints person1: [object Object]
+
+const person2 = new Person('Dan Brown', 80, 'male');
+const person3 = new Person('Jess Smith', 29, 'female');
+  console.log('person2:' + person2.toString());
+  console.log('person3:'+ person3.toString());
+
+function Student(name, age, gender, cohort){
+  Person.call(this, name, age, gender);
+  this.cohort = cohort;
+}
+
+Student.prototype.toString = function(){
+  return (`Name: ${this.name}, Age: ${this.age}, Gender: ${this.gender}, Cohort: ${this.cohort}`);
+}
+const student1 = new Student('Danielle', 30, 'female', 'year2024');
+console.log('student1: ' + student1.toString());
