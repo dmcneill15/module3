@@ -85,6 +85,7 @@ setTimeout(()=>printMe("msg3"), 300);
 
 //Question4 - Fibonacci
 //------------------------------------------------
+/*
 function printFibonnaci(){
   let a = 0;
   let b = 1;
@@ -123,3 +124,51 @@ function printFibonnaciTimeouts(delay, limit){
   }, delay, counter)
 }
 printFibonnaciTimeouts(1000, 10);
+*/
+
+//Question5
+//------------------------------------------------
+let car = {
+  make: "Porsche",
+  model: "911",
+  year: 1964,
+  description() {
+    console.log(`This car is a ${this.make} ${this.model} from ${this.year}`);
+  },
+};
+
+car.description(); //works
+//setTimeout(car.description, 200); //fails 
+//- the context is lost. Context refers to the value of 'this'. The value of 'this' depends on how the function is called
+//car.description() refers to the object itself: 'this' refers to 'car'
+//setTimeout(car.description, 200) - setTimeout call the function without an object reference and function called car.description does not exist
+//this.make, this.model etc. can't be found
+setTimeout(function(){
+  car.description();
+}, 200);
+//arrow function will also work
+//setTimeout(()=>{car.description()}, 200);
+
+/*let carClone = car;
+carClone.year = 2024;
+console.log(carClone.year);*/
+//the dealyed output from setTimeout above uses the carClone year instead of the original year
+//the above carClone is not a true clone of car, but rather another reference to the same car object
+//create a true clone using spread operator:
+let carCloneTrue = {...car};
+carCloneTrue.year = 2024;
+console.log(carCloneTrue.year);
+
+//using bind - explicitly bind the right “context” into the function reference.
+let car2 = {
+  make: "Toyota",
+  model: "234",
+  year: 2021,
+  description() {
+    console.log(`This car is a ${this.make} ${this.model} from ${this.year}`);
+  },
+};
+
+const boundDescription = car2.description.bind(car2);
+setTimeout(boundDescription, 200);
+
