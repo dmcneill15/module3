@@ -128,6 +128,7 @@ printFibonnaciTimeouts(1000, 10);
 
 //Question5
 //------------------------------------------------
+/*
 let car = {
   make: "Porsche",
   model: "911",
@@ -149,9 +150,9 @@ setTimeout(function(){
 //arrow function will also work
 //setTimeout(()=>{car.description()}, 200);
 
-/*let carClone = car;
-carClone.year = 2024;
-console.log(carClone.year);*/
+//let carClone = car;
+//carClone.year = 2024;
+//console.log(carClone.year);
 //the dealyed output from setTimeout above uses the carClone year instead of the original year
 //the above carClone is not a true clone of car, but rather another reference to the same car object
 //create a true clone using spread operator:
@@ -171,4 +172,24 @@ let car2 = {
 
 const boundDescription = car2.description.bind(car2);
 setTimeout(boundDescription, 200);
+*/
 
+//Question6
+//------------------------------------------------
+//use 'Function' prototype to add a new function to all functions
+//here Function must be capital to refer to the Function object/class
+Function.prototype.delay = function(ms){
+  let msDelayfunc = this;       //this is the function we want to call. 'this' determines the context in which the function is executed.
+
+  return function(...args){   //...args ensures that the delay function can take any number of parameters 
+    setTimeout(()=>{
+      msDelayfunc.apply(this,args); //ensures that 'this' refers to the correct context. .apply is a way of using the function
+    }, ms);
+  };
+};
+
+function multiply(a, b, c, d) {
+  console.log(a * b * c * d);
+}
+multiply.delay(500)(5, 5); // prints 25 after 500 milliseconds
+multiply.delay(500)(5, 5, 1, 2); // prints 50 after 500 milliseconds
