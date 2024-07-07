@@ -53,6 +53,7 @@ setTimeout(()=>clearInterval(timerId),1000);        //after 1s clear the timer f
 
 //Question3 - Debouncing
 //------------------------------------------------
+/*
 function printMe(msg) {
   console.log(`printing debounced message: ${msg}`);
 }
@@ -80,3 +81,45 @@ setTimeout(()=>printMe("msg3"), 300);
 //setTimeout(printMe("msg"), 100);   //will call printMe after 100ms
 //setTimeout(printMe("msg"), 200);   //will call printMe after 200ms
 //setTimeout(printMe("msg"), 300);   //will call printMe after 300ms - because no other call is made to printMe, this is allowed to execute
+*/
+
+//Question4 - Fibonacci
+//------------------------------------------------
+function printFibonnaci(){
+  let a = 0;
+  let b = 1;
+  let ans = 1;
+  console.log((ans));
+
+  let timerId = setInterval(()=>{
+    ans = a + b;
+    console.log((ans));
+    a=b;
+    b=ans;
+  }, 1000);
+  setTimeout(()=>clearInterval(timerId), 10000);  //stop when timerId reaches 10s
+}
+
+//printFibonnaci();
+
+function printFibonnaciTimeouts(delay, limit){
+  let a = 0;
+  let b = 1;
+  let ans = 1;
+  console.log((ans));
+
+  let counter = 1;
+
+  //setTimeout(function, delay, arg1, arg2...)
+  //will run calcFibonnaci after the specified delay (1000ms)
+  //in this case counter = args1, which is the argument passed to calcFibonnaci so counter == loopCount to start
+  setTimeout(function calcFibonnaci(loopCount){
+    ans = a + b;
+    console.log((ans));
+    a=b;
+    b=ans;
+    if(loopCount<limit)
+      setTimeout(calcFibonnaci, delay, loopCount+1);
+  }, delay, counter)
+}
+printFibonnaciTimeouts(1000, 10);
