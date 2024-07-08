@@ -309,13 +309,11 @@ aClock.start();
 
 //Question 9 -
 //---------------------------------------------------------------
+/*
 function randomDelay() {
   // your code
   let randomDelay = Math.floor((Math.random()*(5) + 1)*1000); //generate a random number between 1 - 20 ms
-  console.log(randomDelay);
-  /*return new Promise((resolve)=>{
-    setTimeout(()=> resolve(), randomDelay);
-  });*/
+  //console.log(randomDelay);
   return new Promise((resolve,reject)=>{
     if(randomDelay%2==0) setTimeout(()=> resolve(`${randomDelay}`), randomDelay); //method one - just send msg through resolve
     else (reject(new Error(`Delay is not even: ${randomDelay}ms`)));              //method two - create a new object and send message through that
@@ -325,3 +323,73 @@ function randomDelay() {
 randomDelay()
   .then((result) => console.log('There appears to have been a delay of', result, 'ms'))
   .catch((error)=> console.log('Promise rejected:', error.message));
+  */
+
+//Question 10 - fetch with async/await
+//---------------------------------------------------------------
+import fetch from 'node-fetch'
+globalThis.fetch = fetch;
+
+function fetchURLData(url) {
+  let fetchPromise = fetch(url).then(response => {
+    if (response.status === 200) {
+      return response.json();
+    } else {
+      throw new Error(`Request failed with status ${response.status}`);
+    }
+  });
+  return fetchPromise;
+}
+
+async function fetchURLDataSync(url) {
+  let fetchPromise = await fetch(url);
+  if (fetchPromise.status === 200) {
+    return fetchPromise.json();
+  } else {
+    throw new Error(`Request failed with status ${fetchPromise.status}`);
+  }
+  return fetchPromise;
+}
+
+async function fetchURLDataArrays(urls) {
+  /*urls.forEach(url => {
+    let fetchPromise = fetch(url);
+    fetchPromises.push(fetchPromise);
+  });*/
+  try {
+    const fetchPromises = urls.map(url => fetch(url));
+
+    const responses = await Promise.all(fetchPromises);
+
+    const responseData = responses.map(response => {
+      if (response.status == 200) {
+        return response.json();
+      }
+      else {
+        throw new Error(`Request failed with status ${fetchPromise.status}`);
+      }
+    });
+    return await Promise.all(responseData); //wait for all json parsing promises to finish
+  }
+  catch (error) {
+    throw new Error(`Failed to fetch data:${error.message}`)
+  }
+}
+
+/*fetchURLData('https://jsonplaceholder.typicode.com/todos/1')
+  .then(data => console.log(data))
+  .catch(error => console.error(error.message));
+
+fetchURLDataSync('https://jsonplaceholder.typicode.com/todos/1')
+  .then(data => console.log(data))
+  .catch(error => console.error(error.message));*/
+
+const urls = [
+  'https://jsonplaceholder.typicode.com/todos/1',
+  'https://jsonplaceholder.typicode.com/todos/1',
+  'https://jsonplaceholder.typicode.com/todos/1'
+];
+
+fetchURLDataArrays(urls)
+  .then(data => console.log(data))
+  .catch(error => console.error(error.message));

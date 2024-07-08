@@ -1,0 +1,15 @@
+{
+  "name": "module3",
+  "version": "1.0.0",
+  "description": "1. Clone the repo\r 2. Install packages using `npm install`\r 3. Write implementation of all the unit tests to pass them\r 4. `Use npm test` to test",
+  "main": "labExercises.js",
+  "type":"module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  }
+}
