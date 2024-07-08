@@ -230,6 +230,7 @@ console.log('student1: ' + student1.toString());
 
 //Question8 - class inheritance
 //------------------------------------------------
+/*
 class DigitalClock {
   constructor(prefix) {
     this.prefix = prefix;
@@ -304,3 +305,23 @@ class AlarmClock extends DigitalClock{
 
 const aClock = new AlarmClock('id:1', '22:30');
 aClock.start();
+*/
+
+//Question 9 -
+//---------------------------------------------------------------
+function randomDelay() {
+  // your code
+  let randomDelay = Math.floor((Math.random()*(5) + 1)*1000); //generate a random number between 1 - 20 ms
+  console.log(randomDelay);
+  /*return new Promise((resolve)=>{
+    setTimeout(()=> resolve(), randomDelay);
+  });*/
+  return new Promise((resolve,reject)=>{
+    if(randomDelay%2==0) setTimeout(()=> resolve(`${randomDelay}`), randomDelay); //method one - just send msg through resolve
+    else (reject(new Error(`Delay is not even: ${randomDelay}ms`)));              //method two - create a new object and send message through that
+  })
+}
+
+randomDelay()
+  .then((result) => console.log('There appears to have been a delay of', result, 'ms'))
+  .catch((error)=> console.log('Promise rejected:', error.message));
